@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: "postgres:12"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: builder
+      POSTGRES_PASSWORD: builder
+      POSTGRES_DB: client_api
+
+volumes:
+  db_data:
