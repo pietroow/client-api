@@ -37,6 +37,7 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
+    @ApiOperation("Atualizar cliente por id")
     public void update(@PathVariable("id") UUID id,
                        @Valid @RequestBody ClienteCriarAtualizarDTO clienteAtualizarDTO) {
         clienteService.update(id, clienteAtualizarDTO);
