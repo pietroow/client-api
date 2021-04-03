@@ -1,0 +1,251 @@
+{
+	"info": {
+		"_postman_id": "320be005-8fe4-47eb-9344-99005cd73ddf",
+		"name": "cliente-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cliente - Salvar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const location = postman.getResponseHeader(\"Location\");",
+							"",
+							"pm.test(\"Location header is present\", function() {",
+							"    pm.response.to.have.header(\"Location\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 201\", function() {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Location\", function() {",
+							"    const id = location.replace('http://localhost:8080/clientes/', '');",
+							"    pm.globals.set(\"clienteId\", id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"VICTOR PIETRO\",\n  \"email\": \"VICTOR_PIETRO@HOTMAIL.COM\",\n  \"dataNascimento\": \"1995-07-06\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes"
+					]
+				},
+				"description": "http://localhost:8090/marca"
+			},
+			"response": []
+		},
+		{
+			"name": "Cliente - Atualizar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function() {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"VICTOR PIETRO\",\n  \"email\": \"VICTOR_PIETRO@HOTMAIL.COM\",\n  \"dataNascimento\": \"1995-07-06\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes/{{clienteId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"{{clienteId}}"
+					]
+				},
+				"description": "http://localhost:8090/marca/cd9bbd28-19ff-413e-910c-4ace43481a59"
+			},
+			"response": []
+		},
+		{
+			"name": "Cliente - Deletar Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function() {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clientes/{{clienteId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"{{clienteId}}"
+					]
+				},
+				"description": "http://localhost:8090/marca/cd9bbd28-19ff-413e-910c-4ace43481a59"
+			},
+			"response": []
+		},
+		{
+			"name": "Cliente - Buscar por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var retorno = {",
+							"    \"id\": pm.globals.get(\"clienteId\"),",
+							"    \"nome\": \"VICTOR PIETRO\",",
+							"    \"email\": \"VICTOR_PIETRO@HOTMAIL.COM\",",
+							"    \"dataNascimento\": \"1995-07-06\",",
+							"    \"idade\": 25",
+							"};",
+							"",
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Find marca by Id\", function() {",
+							"    var resultado = pm.response.json();",
+							"    pm.expect(JSON.stringify(retorno)).to.equal(JSON.stringify(resultado));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clientes/{{clienteId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"{{clienteId}}"
+					]
+				},
+				"description": "http://localhost:8090/marca/91747cc5-6134-444d-9d06-991f679b1247"
+			},
+			"response": []
+		},
+		{
+			"name": "Cliente - Busca paginada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clientes?filter=",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
