@@ -203,13 +203,103 @@ public class ClienteTest extends IntegrationTestConfiguration {
                 .when()
                 .get("/{clienteId}")
                 .then()
-                .statusCode(HttpStatus.NO_CONTENT.value());
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
-    public void buscaPaginada() {
+    public void buscaPaginada_ParametroNome() {
         given()
                 .param("orderBy", "nome")
+                .param("direction", "ASC")
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get()
+                .then()
+                .body("totalElements", is(2))
+                .body("$", hasKey("content"))
+                .body("content", everyItem(hasKey("id")))
+                .body("content", everyItem(hasKey("nome")))
+                .body("content", everyItem(hasKey("email")))
+                .body("content", everyItem(hasKey("dataNascimento")))
+                .body("content", everyItem(hasKey("idade")))
+                .body("content[0].id", is(cliente2.getId().toString()))
+                .body("content[0].nome", is("GUILHERME LINO"))
+                .body("content[0].email", is("GUILHERMINO.LINO@HOTMAIL.COM"))
+                .body("content[0].dataNascimento", is("2000-10-05"))
+                .body("content[0].idade", is(20))
+                .body("content[1].id", is(cliente.getId().toString()))
+                .body("content[1].nome", is("VICTOR PIETRO"))
+                .body("content[1].email", is("VICTOR_PIETRO@HOTMAIL.COM"))
+                .body("content[1].dataNascimento", is("1995-07-06"))
+                .body("content[1].idade", is(25))
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void buscaPaginada_ParametroEmail() {
+        given()
+                .param("orderBy", "email")
+                .param("direction", "ASC")
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get()
+                .then()
+                .body("totalElements", is(2))
+                .body("$", hasKey("content"))
+                .body("content", everyItem(hasKey("id")))
+                .body("content", everyItem(hasKey("nome")))
+                .body("content", everyItem(hasKey("email")))
+                .body("content", everyItem(hasKey("dataNascimento")))
+                .body("content", everyItem(hasKey("idade")))
+                .body("content[0].id", is(cliente2.getId().toString()))
+                .body("content[0].nome", is("GUILHERME LINO"))
+                .body("content[0].email", is("GUILHERMINO.LINO@HOTMAIL.COM"))
+                .body("content[0].dataNascimento", is("2000-10-05"))
+                .body("content[0].idade", is(20))
+                .body("content[1].id", is(cliente.getId().toString()))
+                .body("content[1].nome", is("VICTOR PIETRO"))
+                .body("content[1].email", is("VICTOR_PIETRO@HOTMAIL.COM"))
+                .body("content[1].dataNascimento", is("1995-07-06"))
+                .body("content[1].idade", is(25))
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void buscaPaginada_ParametroDataNascimento() {
+        given()
+                .param("orderBy", "dataNascimento")
+                .param("direction", "ASC")
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get()
+                .then()
+                .body("totalElements", is(2))
+                .body("$", hasKey("content"))
+                .body("content", everyItem(hasKey("id")))
+                .body("content", everyItem(hasKey("nome")))
+                .body("content", everyItem(hasKey("email")))
+                .body("content", everyItem(hasKey("dataNascimento")))
+                .body("content", everyItem(hasKey("idade")))
+                .body("content[0].id", is(cliente.getId().toString()))
+                .body("content[0].nome", is("VICTOR PIETRO"))
+                .body("content[0].email", is("VICTOR_PIETRO@HOTMAIL.COM"))
+                .body("content[0].dataNascimento", is("1995-07-06"))
+                .body("content[0].idade", is(25))
+                .body("content[1].id", is(cliente2.getId().toString()))
+                .body("content[1].nome", is("GUILHERME LINO"))
+                .body("content[1].email", is("GUILHERMINO.LINO@HOTMAIL.COM"))
+                .body("content[1].dataNascimento", is("2000-10-05"))
+                .body("content[1].idade", is(20))
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void buscaPaginada_ParametroIdade() {
+        given()
+                .param("orderBy", "idade")
                 .param("direction", "ASC")
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
