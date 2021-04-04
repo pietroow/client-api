@@ -16,11 +16,11 @@ interface ClienteRepositoryJpa extends JpaRepository<Cliente, UUID> {
 
     Optional<Cliente> findByEmailIgnoreCaseAndIdNot(String email, UUID id);
 
-    @Query("SELECT new " + ClienteListaDTO.PATH + "(cliente.id, cliente.email, cliente.nome, cliente.dataNascimento, " +
-            "extract(year from age(CURRENT_DATE, cliente.dataNascimento))) " +
-            "FROM Cliente cliente " +
+    @Query("SELECT new " + ClienteListaDTO.PATH + "(cliente.id, cliente.email, cliente.nome, cliente.dataNascimento, cliente.idade) " +
+            "FROM ClienteView cliente " +
             "WHERE (cliente.nome LIKE %:filter% " +
-            "OR cliente.email LIKE %:filter%)")
+            "OR cliente.email LIKE %:filter% " +
+            "OR cast(cliente.idade as text) LIKE %:filter%)")
     Page<ClienteListaDTO> findByPage(String filter, Pageable pageable);
 
 }

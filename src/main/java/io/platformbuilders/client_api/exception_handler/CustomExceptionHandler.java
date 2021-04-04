@@ -23,7 +23,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ResponseBody
-    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseError handle(EntityNotFoundException ex) {
         ex.printStackTrace();
