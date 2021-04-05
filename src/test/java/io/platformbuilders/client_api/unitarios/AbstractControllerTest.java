@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 public abstract class AbstractControllerTest {
 
     protected MockMvc mockMvc;
-    protected ObjectMapper objectMapper = new ObjectMapper();
 
     protected MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype());
@@ -33,11 +32,6 @@ public abstract class AbstractControllerTest {
     protected void registerController(Object controller) {
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .build();
-    }
-
-    protected String toJSON(Object object) throws JsonProcessingException {
-        objectMapper.registerModule(new JavaTimeModule());
-        return objectMapper.writeValueAsString(object);
     }
 
 }
