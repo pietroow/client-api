@@ -1,5 +1,6 @@
-package io.platformbuilders.client_api;
+package io.platformbuilders.client_api.integracao;
 
+import io.platformbuilders.client_api.ClientApiApplication;
 import io.platformbuilders.client_api.util.DatabaseCleaner;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;

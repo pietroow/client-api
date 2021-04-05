@@ -1,4 +1,4 @@
-package io.platformbuilders.client_api;
+package io.platformbuilders.client_api.integracao;
 
 import io.platformbuilders.client_api.domain.cliente.Cliente;
 import io.platformbuilders.client_api.domain.cliente.repository.ClienteRepository;

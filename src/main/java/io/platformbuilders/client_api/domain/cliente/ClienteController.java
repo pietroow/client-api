@@ -6,6 +6,7 @@ import io.platformbuilders.client_api.domain.cliente.dto.ClienteListaDTO;
 import io.platformbuilders.client_api.util.FilterPageable;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
+@Slf4j
 @RestController
 @RequestMapping("/clientes")
 @RequiredArgsConstructor
@@ -32,6 +34,7 @@ public class ClienteController {
                 .path("/{id}")
                 .buildAndExpand(clienteCriado.getId())
                 .toUri();
+        log.info("Criado novo cliente com id: {}", clienteCriado.getId());
         return ResponseEntity.created(location).build();
     }
 
@@ -41,6 +44,7 @@ public class ClienteController {
     public void update(@PathVariable("id") UUID id,
                        @Valid @RequestBody ClienteCriarAtualizarDTO clienteAtualizarDTO) {
         clienteService.update(id, clienteAtualizarDTO);
+        log.info("Atualizado cliente com id: {}", id);
     }
 
     @DeleteMapping("/{id}")
@@ -48,11 +52,13 @@ public class ClienteController {
     @ApiOperation("Excluir um cliente por id")
     public void deleteById(@PathVariable("id") UUID id) {
         clienteService.deleteById(id);
+        log.info("Excluido cliente com id: {}", id);
     }
 
     @GetMapping("/{id}")
     @ApiOperation("Busca e retorna cliente por id")
     public ClienteByIdDTO findById(@PathVariable("id") UUID id) {
+        log.info("Efetuada busca por id: {}", id);
         return clienteService.findById(id);
     }
 
@@ -60,6 +66,7 @@ public class ClienteController {
     @ApiOperation("Paginação de todos os clientes")
     public Page<ClienteListaDTO> findByPage(@RequestParam(value = "filter", defaultValue = "") String filter,
                                             FilterPageable filterPageable) {
+        log.info("Busca paginada efetuada");
         return clienteService.findByPage(filter, filterPageable.listByPage());
     }
 
